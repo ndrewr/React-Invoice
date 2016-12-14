@@ -4,7 +4,10 @@ var express = require('express'),
     path = require('path'),
     cors = require('cors'),
     Sequelize = require('sequelize'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    fs = require("fs"),
+    db = "invoices.sqlite",
+    dbCreated = fs.existsSync(db);
 
 
 sequelize = new Sequelize('sqlite://' + path.join(__dirname, 'invoices.sqlite'), {
@@ -77,53 +80,91 @@ InvoiceItem = sequelize.define('invoice_items', {
   }
 });
 
-sequelize.sync().then(function() {
-  Customer.create({
-    name: "Mark Benson",
-    address: "353 Rochester St, Rialto FL 43250",
-    phone: "555-534-2342"
-  });
+// BEGIN insert to DB conditionally
+if (dbCreated) {
+  console.log('already created!')
+}
+else {
+  console.log('nada. creating!')
 
-  Customer.create({
-    name: "Bob Smith",
-    address: "215 Market St, Dansville CA 94325",
-    phone: "555-534-2342"
-  });
+  sequelize.sync().then(function() {
+    Customer.create({
+      name: "Mark Benson",
+      address: "353 Rochester St, Rialto FL 43250",
+      phone: "555-534-2342"
+    });
 
-  Customer.create({
-    name: "John Draper",
-    address: "890 Main St, Fontana IL 31450",
-    phone: "555-534-2342"
-  });
+    Customer.create({
+      name: "Bob Smith",
+      address: "215 Market St, Dansville CA 94325",
+      phone: "555-534-2342"
+    });
 
-  Product.create({
-    name: "Parachute Pants",
-    price: 29.99
-  });
+    Customer.create({
+      name: "John Draper",
+      address: "890 Main St, Fontana IL 31450",
+      phone: "555-534-2342"
+    });
 
-  Product.create({
-    name: "Phone Holder",
-    price: 9.99
-  });
+    Product.create({
+      name: "Parachute Pants",
+      price: 29.99
+    });
 
-  Product.create({
-    name: "Pet Rock",
-    price: 5.99
-  });
+    Product.create({
+      name: "Phone Holder",
+      price: 9.99
+    });
 
-  Product.create({
-    name: "Egg Timer",
-    price: 15.99
-  });
+    Product.create({
+      name: "Pet Rock",
+      price: 5.99
+    });
 
-  Product.create({
-    name: "Neon Green Hat",
-    price: 21.99
-  });
+    Product.create({
+      name: "Egg Timer",
+      price: 15.99
+    });
 
-}).catch(function(e) {
-  console.log("ERROR SYNCING WITH DB", e);
-});
+    Product.create({
+      name: "Neon Green Hat",
+      price: 21.99
+    });
+
+    Invoice.create({
+      customer_id: 1,
+      discount: .10,
+      total: 53.96
+    });
+
+    Invoice.create({
+      customer_id: 2,
+      discount: .20,
+      total: 47.92
+    });
+
+    InvoiceItem.create({
+      invoice_id: 1,
+      product_id: 0,
+      quantity: 1.0
+    });
+
+    InvoiceItem.create({
+      invoice_id: 1,
+      product_id: 1,
+      quantity: 3.0
+    });
+
+    InvoiceItem.create({
+      invoice_id: 2,
+      product_id: 2,
+      quantity: 10.0
+    });
+  }).catch(function(e) {
+    console.log("ERROR SYNCING WITH DB", e);
+  });
+}
+// END conditional db init
 
 var app = module.exports = express();
 app.set('port', process.env.PORT || 8000);

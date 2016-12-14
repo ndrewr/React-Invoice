@@ -1,0 +1,32 @@
+html,
+body {
+  height: 100%;
+}
+
+.container,
+#app,
+.layout-main {
+  height: 100%;
+}
+
+.view-layout {
+  /*padding-bottom: 5rem;*/
+}
+
+.view-body {
+  /*background-color: #FFF;*/
+}
+
+.list-item {
+  transition: all .3s;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.list-item:hover {
+  transform: translateY(-4px);
+}
