@@ -4,6 +4,8 @@ import {render} from 'react-dom';
 import Invoices from './Invoices.jsx';
 import Products from './Products.jsx';
 
+// TODO routing
+
 class App extends React.Component {
   render () {
     return (
