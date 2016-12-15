@@ -49,28 +49,15 @@ class ProductView extends React.Component {
 }
 
 const composer = async ({}, onData) => {
-  // let data = fetch('/api/products')
-  //         .then((response) => response.json())
-  //         .then((data) =>  {
-  //           console.log(data);
-  //           onData(null, {products: data});
-  //         })
-  //         .catch((error) => console.log('ruhroh: ', error));
   try {
     const data = await fetch('/api/products');
     const json_data = await data.json();
 
-    console.table(json_data);
-
     const more_data = await fetch('api/customers');
     const customer_data = await more_data.json();
 
-    console.table(customer_data);
-
     const mo_data = await fetch('api/invoices');
     const invoice_data = await mo_data.json();
-
-    console.table(invoice_data);
 
     onData(
       null,

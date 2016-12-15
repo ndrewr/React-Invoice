@@ -6,8 +6,6 @@ import 'whatwg-fetch';
 import InvoiceEntry from './InvoiceEntry.jsx';
 import Modal from './Modal.jsx';
 
-import { printData } from './utils.jsx';
-
 class InvoiceView extends React.Component {
   constructor(props) {
     super(props);
@@ -45,7 +43,6 @@ class InvoiceView extends React.Component {
 }
 
 const composer = async ({}, onData) => {
-  console.log('Invoice view rerendering');
   try {
     const invoice_response = await fetch('/api/invoices');
     const invoice_json = await invoice_response.json();
@@ -55,10 +52,6 @@ const composer = async ({}, onData) => {
 
     const productData = await fetch('/api/products');
     const product_json = await productData.json();
-
-    // printData();
-
-    console.log(invoice_json, customer_json);
 
     onData(
       null,

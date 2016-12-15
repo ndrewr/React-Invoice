@@ -9,14 +9,6 @@ body {
   height: 100%;
 }
 
-.view-layout {
-  /*padding-bottom: 5rem;*/
-}
-
-.view-body {
-  /*background-color: #FFF;*/
-}
-
 .list-item {
   transition: all .3s;
 }
@@ -29,4 +21,14 @@ footer {
 
 .list-item:hover {
   transform: translateY(-4px);
+}
+
+.ProductList li {
+  border-bottom: 2px solid #DDD;
+}
+
+.ProductList li input,
+.ComputedTotal input {
+  height: 2rem;
+  width: 4rem;
 }
